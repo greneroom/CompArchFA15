@@ -24,3 +24,6 @@ cov*/
 transcript*
 sc_dpiheader.h
 vsim.dbg
+
+
+*.ini
