@@ -4,9 +4,9 @@ input a, b, carryin;
 assign {carryout, sum}=a+b+carryin;
 endmodule
 
-module structuralFullAdder(out, carryout, a, b, carryin);
+module structuralFullAdder(sum, carryout, a, b, carryin);
 
-  output out, carryout;
+  output sum, carryout;
   input a, b, carryin;
 
   wire a_xor_b;
@@ -22,11 +22,30 @@ module structuralFullAdder(out, carryout, a, b, carryin);
 endmodule
 
 module testFullAdder;
-reg a, b, carryin;
-wire sum, carryout;
-behavioralFullAdder adder (sum, carryout, a, b, carryin);
+  reg a, b, carryin;
+  wire sum, carryout;
+  behavioralFullAdder adder (sum, carryout, a, b, carryin);
 
-// TODO
-initial begin
-end
+  initial begin
+
+    $display("Cin A B | Sum Cout | Expected Output");
+    carryin=0;a=0;b=0; #1000
+    $display("%b   %b %b | %b   %b    | %b  %b", carryin, a, b, sum, carryout, 0, 0);
+    carryin=0;a=1;b=0; #1000
+    $display("%b   %b %b | %b   %b    | %b  %b", carryin, a, b, sum, carryout, 1, 0);
+    carryin=0;a=0;b=1; #1000
+    $display("%b   %b %b | %b   %b    | %b  %b", carryin, a, b, sum, carryout, 1, 0);
+    carryin=0;a=1;b=1; #1000
+    $display("%b   %b %b | %b   %b    | %b  %b", carryin, a, b, sum, carryout, 0, 1);
+    carryin=1;a=0;b=0; #1000
+    $display("%b   %b %b | %b   %b    | %b  %b", carryin, a, b, sum, carryout, 1, 0);
+    carryin=1;a=1;b=0; #1000
+    $display("%b   %b %b | %b   %b    | %b  %b", carryin, a, b, sum, carryout, 0, 1);
+    carryin=1;a=0;b=1; #1000
+    $display("%b   %b %b | %b   %b    | %b  %b", carryin, a, b, sum, carryout, 0, 1);
+    carryin=1;a=1;b=1; #1000
+    $display("%b   %b %b | %b   %b    | %b  %b", carryin, a, b, sum, carryout, 1, 1);
+
+  end
+
 endmodule
