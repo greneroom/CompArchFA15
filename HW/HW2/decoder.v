@@ -19,10 +19,10 @@ module structuralDecoder(out0,out1,out2,out3, address0,address1, enable);
   not not_gate_0(not_address0, address0);
   not not_gate_1(not_address1, address1);
 
-  and and_gate_0(out0, not_address0, not_address1);
-  and and_gate_0(out1, address0, not_address1);
-  and and_gate_0(out2, not_address0, address1);
-  and and_gate_0(out3, address0, address1);
+  and and_gate_0(out0, enable, not_address0, not_address1);
+  and and_gate_1(out1, enable, address0, not_address1);
+  and and_gate_2(out2, enable, not_address0, address1);
+  and and_gate_3(out3, enable, saddress0, address1);
 
 endmodule
 
