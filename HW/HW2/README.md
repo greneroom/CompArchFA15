@@ -15,3 +15,5 @@ This also creates three wave files. If we want to see the `adder` wave-form, for
 ```
 gtk-wave adder.vcd
 ```
+
+Click the TestModule, and drag the wires onto the waveform. More info is available [here]{http://iverilog.wikia.com/wiki/GTKWAVE}
