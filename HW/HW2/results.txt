@@ -1,0 +1,35 @@
+VCD info: dumpfile adder.vcd opened for output.
+Adder truth table
+Cin A B | Sum Cout | Expected Output
+0   0 0 | 0   0    | 0  1
+0   1 0 | 1   0    | 1  0
+0   0 1 | 1   0    | 1  0
+0   1 1 | 0   1    | 0  1
+1   0 0 | 1   0    | 1  0
+1   1 0 | 0   1    | 0  1
+1   0 1 | 0   1    | 0  1
+1   1 1 | 1   1    | 1  1
+
+VCD info: dumpfile decoder.vcd opened for output.
+Decoder truth table
+En A0 A1| O0 O1 O2 O3 | Expected Output
+0  0  0 |  0  0  0  0 | All false
+0  1  0 |  0  0  0  0 | All false
+0  0  1 |  0  0  0  0 | All false
+0  1  1 |  0  0  0  0 | All false
+1  0  0 |  1  0  0  0 | O0 Only
+1  1  0 |  0  1  0  0 | O1 Only
+1  0  1 |  0  0  1  0 | O2 Only
+1  1  1 |  0  0  0  1 | O3 Only
+
+VCD info: dumpfile multiplexer.vcd opened for output.
+A0 A1| In0 In1 In2 In3 | Out | Expected Output
+0  0 | 0   x   x   x   | 0   | 0
+0  0 | 1   x   x   x   | 1   | 1
+0  1 | x   0   x   x   | 0   | 0
+0  1 | x   1   x   x   | 1   | 1
+1  0 | x   x   0   x   | 0   | 0
+1  0 | x   x   1   x   | 1   | 1
+1  1 | x   x   x   0   | 0   | 0
+1  1 | x   x   x   1   | 1   | 1
+

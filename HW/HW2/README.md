@@ -17,3 +17,5 @@ gtk-wave adder.vcd
 ```
 
 Click the TestModule, and drag the wires onto the waveform. More info is available [here]{http://iverilog.wikia.com/wiki/GTKWAVE}
+
+More information is available in the PDF in `tex/hw2.pdf`.
