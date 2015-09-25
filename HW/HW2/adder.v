@@ -39,10 +39,11 @@ module testFullAdder;
   initial begin
 
     // create the wave file
-    $dumpfile("wavefile.vcd");
+    $dumpfile("adder.vcd");
     $dumpvars(0, testFullAdder);
 
     // output a truth table
+    $display("Adder truth table");
     $display("Cin A B | Sum Cout | Expected Output");
     carryin=0;a=0;b=0; #1000
     $display("%b   %b %b | %b   %b    | %b  %b", carryin, a, b, sum, carryout,
@@ -68,6 +69,7 @@ module testFullAdder;
     carryin=1;a=1;b=1; #1000
     $display("%b   %b %b | %b   %b    | %b  %b", carryin, a, b, sum, carryout,
              1'b1, 1'b1);
+    $display();
 
   end
 
