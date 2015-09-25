@@ -9,3 +9,9 @@ This creates a file `results.txt` with the test bench results. To view them:
 ```
 cat results.txt
 ```
+
+This also creates three wave files. If we want to see the `adder` wave-form, for example:
+
+```
+gtk-wave adder.vcd
+```
