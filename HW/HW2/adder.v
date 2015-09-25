@@ -27,11 +27,15 @@ module structuralFullAdder(sum, carryout, a, b, carryin);
 endmodule
 
 module testFullAdder;
+
   reg a, b, carryin;
   wire sum, carryout;
-  behavioralFullAdder adder (sum, carryout, a, b, carryin);
+  structuralFullAdder adder (sum, carryout, a, b, carryin);
 
   initial begin
+
+    $dumpfile("wavefile.vcd");
+    $dumpvars(0, testFullAdder);
 
     $display("Cin A B | Sum Cout | Expected Output");
     carryin=0;a=0;b=0; #1000
