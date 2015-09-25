@@ -82,6 +82,13 @@ Cin A B | Sum Cout | Expected Output
 1   1 1 | 1   1    | 1  1
 \end{lstlisting}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{../wave_forms/adder_wave.png}
+				
+	\caption{The waveform for a binary adder. Note the propagation delays due to the delays in the gates.}
+\end{figure}
+
 \section{The multiplexer}
 
 The multiplexer takes in two bits: $A0$, $A1$. Using these two bits as a length-two binary number, the multiplexer selects one of its four outputs based on the inputs. It then sets this output to $1$, and all the others to $0$. and the carry-over from the previous addition.
@@ -103,6 +110,13 @@ A0 A1| In0 In1 In2 In3 | Out | Expected Output
 1  1 | x   x   x   0   | 0   | 0
 1  1 | x   x   x   1   | 1   | 1
 \end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{../wave_forms/multiplexer_wave.png}
+				
+	\caption{The waveform for a mux.}
+\end{figure}
 
 \section{The decoder}
 
@@ -126,6 +140,13 @@ En A0 A1| O0 O1 O2 O3 | Expected Output
 1  1  1 |  0  0  0  1 | O3 Only
 \end{lstlisting}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{../wave_forms/decoder_wave.png}
+				
+	\caption{The waveform for a decoder.}
+\end{figure}
+
 \appendix
 
 \section{Adder code}
@@ -136,7 +157,7 @@ En A0 A1| O0 O1 O2 O3 | Expected Output
 
 \lstinputlisting[language=Verilog]{../multiplexer.v}
 
-\section{Multiplexer code} \label{decoder}
+\section{Decoder code} \label{decoder}
 
 \lstinputlisting[language=Verilog]{../decoder.v}
 
