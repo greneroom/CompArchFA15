@@ -1,12 +1,14 @@
 module mux32to1by1
 (
-output reg      out,
+output wire      out,
 input[4:0]  address,
 input[31:0] inputs
 );
 
-always @(address or inputs) begin
-	out = inputs[address];
-end
+assign out = inputs[address];
+
+// always @(address or inputs) begin
+// 	out = inputs[address];
+// end
 
 endmodule
