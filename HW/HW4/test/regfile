@@ -1,1 +1,1 @@
-iverilog -o test/compiled verilog/decoders.v verilog/mux32to1by1.v verilog/mux32to1by32.v verilog/regfile.v verilog/regfile.t.v verilog/registers.v && ./test/compiled
+iverilog -o test/compiled verilog/decoders.v verilog/mux32to1by1.v verilog/mux32to1by32.v verilog/regfile.v verilog/regfile.t.v verilog/registers.v verilog/brokenregfiles.v && ./test/compiled
