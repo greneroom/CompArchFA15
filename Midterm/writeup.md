@@ -77,7 +77,7 @@ Both `count` and `curr_state` are set using positive-edge-triggered D flip flops
 
 * Inputs -- `Clk` and `negedge_in`
 * Outputs -- `LED`
-* Size --
+* Size -- A mux contains log<sub>2</sub>(N) inverters, N `AND` gates, each with log<sub>2</sub>(N) + 1 inputs, and an N input `OR` gate.
 
 #### +1
 
@@ -87,7 +87,8 @@ Both the FSM and the Input Conditioner require an n-bit wire (6 bits in the cond
 
 * Inputs -- `count`
 * Outputs -- `out=count+1`
-* Size --
+* Size -- Size of each adder is `4`, Total cost=`4*N`
+* Cost -- Cost of each adder is `11`. Total cost=`11*N`
 
 #### Adder
 
@@ -97,8 +98,8 @@ The adder takes in two binary inputs and returns a result and a carry out.
 
 * Inputs -- `inA` and `inB`
 * Outputs -- `out` and `Cout`
-* Size --
-* Cost --
+* Size -- 4
+* Cost -- `XOR` gate is 4 `NAND` gates (https://en.wikipedia.org/wiki/XOR_gate), which costs `8`. `AND` costs `3`. Total cost=`11`
 
 #### =16,383
 
@@ -108,5 +109,5 @@ In order to check `count=16,383`, we simply `AND` its 14 bits together. (The bin
 
 * Inputs -- `count`
 * Outputs -- `out`
-* Size --
-* Cost --
+* Size -- 14
+* Cost -- 15
