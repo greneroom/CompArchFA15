@@ -23,7 +23,7 @@ There are four operational modes for the bike light. They are, in order:
 This bike light has a single input button. The button has two states, `HIGH` when pressed and `LOW` otherwise. The input button causes the current state to shift forward on its negative edge (and in the case of the button being pressed while the state is Dim, the state is reset to Off). We increment the state on the negative edge because the light switches state when the button is released. This is a design decision that we make.
 
 ### Output
-
+
 Our output is a single LED which can either be on or off. The following is a graph of LED output for each operational mode. Note that the LED can only be `HIGH` or `LOW`, so for the Dim state, we use PWM to simulate dimming.
 
 ![](images/led_states.jpg)
@@ -57,7 +57,7 @@ We take the button, condition it, and then pass on whether or not the button was
 
 ![](images/conditioner.jpg)
 
-The input conditioner conditions an output my only changing its output if the input has been the same for 33 consecutive clock cycles. We do this in order to ensure the flickering in the first millisecond after a button press does not affect output. (Each clock cycle is 1/32,768=0.03 milliseconds. 33 clock cycles = 1.007 milliseconds.) The conditioner passes the input through 2 flip flops. When the output of the second flip flop is different than the current output, we increment count. When `count=33`, we change the output, reset `count`, and set `negedge` if the new value is `0`.
+The input conditioner conditions an output by only changing its output if the input has been the same for 33 consecutive clock cycles. We do this in order to ensure the flickering in the first millisecond after a button press does not affect output. (Each clock cycle is 1/32,768=0.03 milliseconds. 33 clock cycles = 1.007 milliseconds.) The conditioner passes the input through 2 flip flops. When the output of the second flip flop is different than the current output, we increment count. When `count=33` (we check this by with a 6-bit `NOR` gate that checks if the middle 4 bits of `count` are `0` and the outer two are `1`, as `33=100001`), we change the output, reset `count`, and set `negedge` if the new value is `0`.
 
 * Inputs -- `noisysignal` (the button) and `clk`
 * Outputs -- `conditioned`
@@ -79,3 +79,34 @@ Both `count` and `curr_state` are set using positive-edge-triggered D flip flops
 * Outputs -- `LED`
 * Size --
 
+#### +1
+
+![](images/fulladd.jpg)
+
+Both the FSM and the Input Conditioner require an n-bit wire (6 bits in the conditioner, 14 bits in the FSM) to be incremented by 1. We do this by linking a series of Full Adders together. Shown above is the schematic for a 14 bit incrementer.
+
+* Inputs -- `count`
+* Outputs -- `out=count+1`
+* Size --
+
+#### Adder
+
+![](images/adder.jpg)
+
+The adder takes in two binary inputs and returns a result and a carry out.
+
+* Inputs -- `inA` and `inB`
+* Outputs -- `out` and `Cout`
+* Size --
+* Cost --
+
+#### =16,383
+
+![](images/equality.jpg)
+
+In order to check `count=16,383`, we simply `AND` its 14 bits together. (The binary representation of `16,383` is `11,1111,1111,1111`.)
+
+* Inputs -- `count`
+* Outputs -- `out`
+* Size --
+* Cost --
