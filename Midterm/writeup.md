@@ -77,8 +77,9 @@ Both `count` and `curr_state` are set using positive-edge-triggered D flip flops
 
 * Inputs -- `Clk` and `negedge_in`
 * Outputs -- `LED`
-* Size -- A mux contains log<sub>2</sub>(N) inverters, N `AND` gates, each with log<sub>2</sub>(N) + 1 inputs, and an N input `OR` gate. Size = log<sub>2</sub>(N) + N * (log<sub>2</sub>(N) + 1) + N
-* Cost -- Same as size, with N + 1 inverters. Cost = log<sub>2</sub>(N) + N * (log<sub>2</sub>(N) + 1) + 2N + 1
+
+##### Size
+A mux contains log<sub>2</sub>(N) inverters, N `AND` gates, each with log<sub>2</sub>(N) + 1 inputs, and an N input `OR` gate. Size of mux = log<sub>2</sub>(N) + N * (log<sub>2</sub>(N) + 1) + N = (N+1)*log<sub>2</sub>(N) + 2N. (I consulted Quiz 2 to verify this). For the cost of a mux, we use N + 1 inverters to convert AND to NAND and OR to NOR. Cost of mux = (N+1)*log<sub>2</sub>(N) + 3N + 1. We have four 6-input muxes, each with cost=
 
 #### +1
 
