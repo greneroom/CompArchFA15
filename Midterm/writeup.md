@@ -69,7 +69,7 @@ The input conditioner conditions an output by only changing its output if the in
 
 The FSM transitions between the six states previously described. The top mux sets the next stage if there is no button press (On and Off stay in their stage, Blink_on and Blink_off transition between eachother when the `count=16,383`, and Dun_On and Dim_Off always transition to eachother). The second mux sets the next stage if the button was released (Off -> On -> Blink -> Dim). The outputs of both of these muxes is selected by another mux whose control signal is `negedge_in`.
 
-The third mux sets the `count`. The `count` is `0` unless we are in a Blink stage, in which case `count=count+1` unless `count=16,383`.
+The third mux sets the `count`, which is a 14-bit wire. The `count` is `0` unless we are in a Blink stage, in which case `count=count+1` unless `count=16,383`.
 
 The buttom mux sets the output of the LED based on the current state. The LED is on in states On, Blink_On, and Dim_on.
 
@@ -78,8 +78,12 @@ Both `count` and `curr_state` are set using positive-edge-triggered D flip flops
 * Inputs -- `Clk` and `negedge_in`
 * Outputs -- `LED`
 
-##### Size
-A mux contains log<sub>2</sub>(N) inverters, N `AND` gates, each with log<sub>2</sub>(N) + 1 inputs, and an N input `OR` gate. Size of mux = log<sub>2</sub>(N) + N * (log<sub>2</sub>(N) + 1) + N = (N+1)*log<sub>2</sub>(N) + 2N. (I consulted Quiz 2 to verify this). For the cost of a mux, we use N + 1 inverters to convert AND to NAND and OR to NOR. Cost of mux = (N+1)*log<sub>2</sub>(N) + 3N + 1. We have four 6-input muxes, each with cost=
+##### Size and Cost
+A mux contains log<sub>2</sub>(N) inverters, N `AND` gates, each with log<sub>2</sub>(N) + 1 inputs, and an N input `OR` gate. Size of mux = log<sub>2</sub>(N) + N * (log<sub>2</sub>(N) + 1) + N = (N+1) * log<sub>2</sub>(N) + 2N. (I consulted Quiz 2 to verify this). For the cost of a mux, we use N + 1 inverters to convert AND to NAND and OR to NOR. Cost of mux = (N+1) * log<sub>2</sub>(N) + 3N + 1.
+
+We have four 6-input muxes, each with size=33 and cost=40. We have four 2-input muxes, each with size=7 and cost=10. We have a +1 to a 14-bit wire, which has size=56 and cost=154. We have an =16,383 which has size=14 and cost=15. We have a D-flip-flop for a 3-bit wire (`curr_state`) and for a 14-bit wire (`count`). Each D flip flop has size and cost=13, so our flip-flops for the `curr_state` and `count` have size and cost=221.
+
+Therefore, our total size=517 and our total cost=670.
 
 #### +1
 
