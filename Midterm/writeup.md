@@ -77,7 +77,8 @@ Both `count` and `curr_state` are set using positive-edge-triggered D flip flops
 
 * Inputs -- `Clk` and `negedge_in`
 * Outputs -- `LED`
-* Size -- A mux contains log<sub>2</sub>(N) inverters, N `AND` gates, each with log<sub>2</sub>(N) + 1 inputs, and an N input `OR` gate.
+* Size -- A mux contains log<sub>2</sub>(N) inverters, N `AND` gates, each with log<sub>2</sub>(N) + 1 inputs, and an N input `OR` gate. Size = log<sub>2</sub>(N) + N * (log<sub>2</sub>(N) + 1) + N
+* Cost -- Same as size, with N + 1 inverters. Cost = log<sub>2</sub>(N) + N * (log<sub>2</sub>(N) + 1) + 2N + 1
 
 #### +1
 
@@ -87,7 +88,7 @@ Both the FSM and the Input Conditioner require an n-bit wire (6 bits in the cond
 
 * Inputs -- `count`
 * Outputs -- `out=count+1`
-* Size -- Size of each adder is `4`, Total cost=`4*N`
+* Size -- Size of each adder is `4`, Total size=`4*N`
 * Cost -- Cost of each adder is `11`. Total cost=`11*N`
 
 #### Adder
