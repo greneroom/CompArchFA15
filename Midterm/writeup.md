@@ -53,6 +53,11 @@ Because all program logic is handles by our FSM and how it transitions between s
 
 We take the button, condition it, and then pass on whether or not the button was just released to the FSM. The FSM uses the button press along with its own logic to determine which state to be in, and then sets the output of the LED accordingly.
 
+* Inputs -- `Clk` and `button`
+* Outputs -- `LED`
+* Size -- 2 (clock) + 118 (conditioner) + 517 (FSM) = 637
+* Cost -- 2 (clock) + 174 (conditioner) + 670 (FSM) = 846
+
 #### Input Conditioner
 
 ![](images/conditioner.jpg)
@@ -61,7 +66,12 @@ The input conditioner conditions an output by only changing its output if the in
 
 * Inputs -- `noisysignal` (the button) and `clk`
 * Outputs -- `conditioned`
-* Size --
+
+##### Size and Cost
+
+There are five one-bit D-flip-flops, each with cost and size=13. There are two 2-input muxes, each with size=7 and cost=10. There is a +1 on a 6-bit wire, with size=24 and cost=66. There is an `XNOR` which has size=2, which can be made from four `NOR`s (https://en.wikipedia.org/wiki/XNOR_gate), so cost=8. There are three inverters, each with size and cost = 1. There is an `AND` and an `OR`, each with size=2 and cost=3. The 6-input `NOR` has size and cost=6.
+
+Total size = 118, and total cost = 174.
 
 #### FSM
 
