@@ -55,8 +55,12 @@ We take the button, condition it, and then pass on whether or not the button was
 
 * Inputs -- `Clk` and `button`
 * Outputs -- `LED`
-* Size -- 2 (clock) + 118 (conditioner) + 517 (FSM) = 637
-* Cost -- 2 (clock) + 174 (conditioner) + 670 (FSM) = 846
+* Size -- 2 (clock) + 118 (conditioner) + 451 (FSM) = 571
+* Cost -- 2 (clock) + 174 (conditioner) + 590 (FSM) = 766
+
+Before we devle into how each of these components was constructed, we will define how to calculate the size and cost of a multiplexer for reference:
+
+A mux contains log<sub>2</sub>(N) inverters, N `AND` gates, each with log<sub>2</sub>(N) + 1 inputs, and an N input `OR` gate. Size of mux = log<sub>2</sub>(N) + N * (log<sub>2</sub>(N) + 1) + N = (N+1) * log<sub>2</sub>(N) + 2N. (I consulted Quiz 2 to verify this). For the cost of a mux, we use N + 1 inverters to convert AND to NAND and OR to NOR. Cost of mux = (N+1) * log<sub>2</sub>(N) + 3N + 1.
 
 #### Input Conditioner
 
@@ -69,9 +73,9 @@ The input conditioner conditions an output by only changing its output if the in
 
 ##### Size and Cost
 
-There are five one-bit D-flip-flops, each with cost and size=13. There are two 2-input muxes, each with size=7 and cost=10. There is a +1 on a 6-bit wire, with size=24 and cost=66. There is an `XNOR` which has size=2, which can be made from four `NOR`s (https://en.wikipedia.org/wiki/XNOR_gate), so cost=8. There are three inverters, each with size and cost = 1. There is an `AND` and an `OR`, each with size=2 and cost=3. The 6-input `NOR` has size and cost=6.
+There are five one-bit D-flip-flops, each with cost and size=13. There are two 2-input muxes, each with size=7 and cost=10. There is an incrementer on a 6-bit wire, with size=24 and cost=66. There is an `XNOR` which has size=2, which can be made from four `NOR`s (https://en.wikipedia.org/wiki/XNOR_gate), so cost=8. There are three inverters, each with size and cost = 1. There is an `AND` and an `OR`, each with size=2 and cost=3. The 6-input `NOR` has size and cost=6.
 
-Total size = 118, and total cost = 174.
+Total size = `118`, and total cost = `174`.
 
 #### FSM
 
@@ -89,17 +93,16 @@ Both `count` and `curr_state` are set using positive-edge-triggered D flip flops
 * Outputs -- `LED`
 
 ##### Size and Cost
-A mux contains log<sub>2</sub>(N) inverters, N `AND` gates, each with log<sub>2</sub>(N) + 1 inputs, and an N input `OR` gate. Size of mux = log<sub>2</sub>(N) + N * (log<sub>2</sub>(N) + 1) + N = (N+1) * log<sub>2</sub>(N) + 2N. (I consulted Quiz 2 to verify this). For the cost of a mux, we use N + 1 inverters to convert AND to NAND and OR to NOR. Cost of mux = (N+1) * log<sub>2</sub>(N) + 3N + 1.
 
-We have four 6-input muxes, each with size=33 and cost=40. We have four 2-input muxes, each with size=7 and cost=10. We have a +1 to a 14-bit wire, which has size=56 and cost=154. We have an =16,383 which has size=14 and cost=15. We have a D-flip-flop for a 3-bit wire (`curr_state`) and for a 14-bit wire (`count`). Each D flip flop has size and cost=13, so our flip-flops for the `curr_state` and `count` have size and cost=221.
+We have four 6-input muxes, each with size=33 and cost=40. We have four 2-input muxes, each with size=7 and cost=10. We have an incrementer to a 14-bit wire, which has size=56 and cost=154. We have an =16,383 checker which has size=14 and cost=15. We have a D-flip-flop for a 3-bit wire (`curr_state`) and for a 14-bit wire (`count`). Each D flip flop for a single-bit has size and cost=13, so our flip-flops for the `curr_state` and `count` have combined size and cost=221.
 
-Therefore, our total size=517 and our total cost=670.
+Therefore, our total size = `451` and our total cost = `590`.
 
-#### +1
+#### Incrementer
 
 ![](images/fulladd.jpg)
 
-Both the FSM and the Input Conditioner require an n-bit wire (6 bits in the conditioner, 14 bits in the FSM) to be incremented by 1. We do this by linking a series of Full Adders together. Shown above is the schematic for a 14 bit incrementer.
+Both the FSM and the Input Conditioner require an n-bit wire (6 bits in the conditioner, 14 bits in the FSM) to be incremented by `1`. We do this by linking a series of Adders together. Shown above is the schematic for a 14-bit incrementer.
 
 * Inputs -- `count`
 * Outputs -- `out=count+1`
@@ -125,5 +128,5 @@ In order to check `count=16,383`, we simply `AND` its 14 bits together. (The bin
 
 * Inputs -- `count`
 * Outputs -- `out`
-* Size -- 14
-* Cost -- 15
+* Size -- `14`
+* Cost -- `15`
